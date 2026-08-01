@@ -7,9 +7,15 @@ imagemCinza = cv.imread('C:/enviroment/learningOpenCV/09/giantscausewaycolorido.
 cv.imshow('Cinza', imagemCinza)
 
 #essa aq tem 1200x900
-#altura, largura, canais = imagemOriginal.shape
+altura, largura = imagemCinza.shape
 
-matrizDaImagem = imagemCinza
+matrizDaImagem = np.zeros((altura, largura), dtype=np.uint8) #cria uma matriz de zeros com o mesmo tamanho da imagem
+
+#cópia pixel a pixel
+for y in range(altura):
+    for x in range(largura):
+        matrizDaImagem[y, x] = imagemCinza[y, x] #preenche a matriz 
+
 caminho = 'C:/enviroment/learningOpenCV/09/dados.txt' #usando write n dava certo
 #matrizDaImagem = np.array(imagemOriginal) #transforma a imagem em uma matriz
 np.savetxt(caminho, matrizDaImagem, fmt='%d') #salva a matriz em um txt
