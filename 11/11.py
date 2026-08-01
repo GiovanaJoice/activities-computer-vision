@@ -25,19 +25,27 @@ for i in range(altura): #linha  -> y
             contadorX += j
             contadorY += i
             contadorPixels += 1
-        
+#se as coordenadas do pixel atual forem pretas (0,0), então
+#os contadores identificam que eles fazem parte do quadrado
+#e as coordenadas, x e y, sao incrementados para contagem
+
+
 
 if contadorPixels > 0:
     centroX = contadorX / contadorPixels
     centroY = contadorY / contadorPixels
+    #achando as coordenadas do centro
     print('Centro X: ', centroX)
     print('Centro Y: ', centroY)
 
 
-    cv.circle(imagemOriginal, (int(centroX), int(centroY)), 5, (0, 0, 255), -1)
-    cv.imshow('Imagem com Centro', imagemOriginal)
+    imagemComCirculo = cv.circle(imagemOriginal, (int(centroX), int(centroY)), 5, (0, 0, 255), -1)
+    cv.imwrite('C:/enviroment/learningOpenCV/11/imagemComCentro.jpg', imagemComCirculo)
+    cv.imshow('Imagem com Centro', imagemComCirculo)
+    cv.waitKey(0)
 else:
     print('Nenhum pixel preto encontrado na imagem.')
+
 
 cv.waitKey(0)
 cv.destroyAllWindows()
