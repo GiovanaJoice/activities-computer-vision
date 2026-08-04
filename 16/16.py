@@ -9,23 +9,23 @@ while rodando:
   status, frame = camera.read()
 
   framecinza = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-
-  if not status or cv.waitKey(1) & 0xFF == ord('x'): #aperte x pra fechar a camera
-    rodando = False
-    break
+  frameEqualizado = cv.equalizeHist(framecinza)
 
   cv.imshow('Camera', frame)
   cv.imshow('Camera Cinza', framecinza)
+  cv.imshow('Camera Equalizada', frameEqualizado)
 
-  cv.imwrite('C:/enviroment/learningOpenCV/16/camera.jpg', framecinza)
+  opcao = cv.waitKey(1) 
+  if opcao == ord('x'):
+    cv.imwrite('C:/enviroment/learningOpenCV/16/camera.jpg', framecinza)
+    cv.imwrite('C:/enviroment/learningOpenCV/16/camera_equalizada.jpg', frameEqualizado)
+    rodando = False
 
   
 camera.release()
 cv.destroyAllWindows()
 
 cv.imshow('Camera cinza', framecinza)
-frameEqualizado = cv.equalizeHist(framecinza)
 cv.imshow('Camera com Filtro Equalizado', frameEqualizado)
-cv.imwrite('C:/enviroment/learningOpenCV/16/camera_equalizada.jpg', frameEqualizado)
 cv.waitKey(0)
 cv.destroyAllWindows()

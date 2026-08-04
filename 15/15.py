@@ -19,7 +19,7 @@ while rodando:
   cv.imshow('Camera Cinza', framecinza)
 
   cv.imwrite('C:/enviroment/learningOpenCV/15/camera.jpg', framecinza)
-
+  
   
 camera.release()
 cv.destroyAllWindows()
