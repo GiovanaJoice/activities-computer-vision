@@ -12,21 +12,21 @@ regiao = np.zeros((altura, largura), dtype=np.uint8) #eh isso q inverte o fundo,
 listaDePixels = [semente] #lista criada começando com a seed sendo passada e ela n pode ser vazia
 pixelsvisitados = np.zeros((altura, largura), dtype=bool)
 pixelsvisitados[semente] = True
-vizinhos = [(-1, 0), (1, 0), (0, -1), (0, 1)] #cima, baixo, esquerda, direita
+vizinhos = [(-1, 0), (1, 0), (0, -1), (0, 1)] #cima, baixo, esquerda, direita (lista de deslocamentos)
 ##as coordenadas sao do ssistema de cordenadas de matriz, então a coordenada (0, 0) é o pixel do canto superior esquerdo da imagem
 
-while len(listaDePixels) > 0:
-  yAtual, xAtual = listaDePixels.pop(0) #pop remove o primeiro elemento da lista e retorna ele
+while len(listaDePixels) > 0: #pra todos os pixels serem checados até zerar
+  yAtual, xAtual = listaDePixels.pop(0) #pop remove o primeiro elemento da lista e retorna ele pra x e y atual
   regiao[yAtual, xAtual] = 255 #marca o pixel atual como parte da região
-  for dy, dx in vizinhos:
-    yVizinho  = yAtual + dy
+  for dy, dx in vizinhos: #direção da a coordenada do pixel atual para checar os vizinhos
+    yVizinho  = yAtual + dy #coordenada final/real do vizinho
     xVizinho = xAtual + dx
 
     if 0 <= yVizinho < altura and 0 <= xVizinho < largura:
       if not pixelsvisitados[yVizinho, xVizinho]:
         pixelsvisitados[yVizinho, xVizinho] = True
         if imagemCinza[yVizinho, xVizinho] < 127:
-          listaDePixels.append((yVizinho, xVizinho))
+          listaDePixels.append((yVizinho, xVizinho)) #adiciona a coordenada no final da fila
 
 cv.imshow('Imagem Original', imagemOriginal)
 cv.imshow('Imagem Cinza', imagemCinza)
