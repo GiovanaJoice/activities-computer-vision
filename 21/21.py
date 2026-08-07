@@ -35,6 +35,8 @@ def algoritmoDeCrescimentoDeRegiao(seed):
               if imagemCinza[yVizinho, xVizinho] < 127:
                  listaDePixels.append((yVizinho, xVizinho)) #adiciona a coordenada no final da fila
   cv.imshow('Regiao Crescida', regiao)
+  cv.imwrite('C:/enviroment/learningOpenCV/21/imagemRegiaoCrescida.png', regiao)
+
 
 nomeJanela = 'Clique na imagem para selecionar a seed'
 cv.namedWindow(nomeJanela)
