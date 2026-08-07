@@ -3,9 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 #import pyautogui
 
-
-imagemOriginal = cv.imread('C:/enviroment/learningOpenCV/23/papagaioDoCongo.webp')
-altura, largura, canal = imagemOriginal.shape
+imagemOriginal = cv.imread('C:/enviroment/learningOpenCV/23/cacatua.jpg')
+imagemCinza = cv.cvtColor(imagemOriginal, cv.COLOR_BGR2GRAY)
+altura, largura = imagemCinza.shape
 print(f'Altura: {altura}, Largura: {largura}')
 
 def selecionarSeed(event, x, y, flags, param):
@@ -15,14 +15,13 @@ def selecionarSeed(event, x, y, flags, param):
         algoritmoDeCrescimentoDeRegiao(seed)
 
 def algoritmoDeCrescimentoDeRegiao(seed):
-   corSemente = imagemOriginal[seed]
-   rangeTolerado = 35 #definindo a variacao de cor q aceitamos
    regiao = np.zeros((altura, largura), dtype=np.uint8)
    listaDePixels = [seed] #lista criada começando com a seed sendo passada e ela n pode ser vazia
    pixelsVisitados = np.zeros((altura, largura), dtype=bool)
    pixelsVisitados[seed] = True
+   intensidadeSeed = int(imagemCinza[seed]) #salvando a intensidade da seed escolhida
+   rangeTolerado = 60
    vizinhos = [(-1, 0), (1, 0), (0, -1), (0, 1)] #cima, baixo, esquerda, direita
-    
 
    while len(listaDePixels) > 0:
      yAtual, xAtual = listaDePixels.pop(0)
@@ -33,11 +32,10 @@ def algoritmoDeCrescimentoDeRegiao(seed):
 
         if 0 <= yVizinho < altura and 0 <= xVizinho < largura:
            if not pixelsVisitados[yVizinho, xVizinho]: #Se for falso, significa que o pixel ainda não foi visitado
-              pixelsVisitados[yVizinho, xVizinho] = True #marca como visitado
-              corVizinho = imagemOriginal[yVizinho, xVizinho] #pegando a cor bgr dos pixels vizinho na imagem original
-              distancia = np.linalg.norm(corVizinho.astype(int) - corSemente.astype(int))
-
-              if distancia < rangeTolerado:
+              pixelsVisitados[yVizinho, xVizinho] = True
+              intensidadeVizinho = int(imagemCinza[yVizinho, xVizinho])
+              diferenca =  abs(intensidadeVizinho - intensidadeSeed) #modulo p nao admitir valores neagtivos
+              if diferenca < rangeTolerado:
                  listaDePixels.append((yVizinho, xVizinho)) #adiciona a coordenada no final da fila
   
    #CoDIGO DA Questao 11 reaproveitado
@@ -63,7 +61,7 @@ def algoritmoDeCrescimentoDeRegiao(seed):
       imagemColorida = np.zeros((altura, largura, 3), dtype=np.uint8)
       imagemColorida[regiao == 255] = [255, 0, 0]  # Azul para a região crescida
       cv.circle(imagemColorida, (int(centroX), int(centroY)), 5, (0, 255, 0), -1)
-      cv.imwrite('C:/enviroment/learningOpenCV/22/imagemComCentro.jpg', imagemColorida)
+      cv.imwrite('C:/enviroment/learningOpenCV/23/imagemComCentro.jpg', imagemColorida)
       cv.imshow('Imagem com Centro', imagemColorida)
    else:
       print('Nenhum pixel  encontrado na imagem.')
@@ -71,7 +69,8 @@ def algoritmoDeCrescimentoDeRegiao(seed):
 nomeJanela = 'Clique na imagem para selecionar a seed'
 cv.namedWindow(nomeJanela)
 cv.setMouseCallback(nomeJanela, selecionarSeed)
-cv.imshow(nomeJanela, imagemOriginal)
+cv.imshow(nomeJanela, imagemCinza)
 
 cv.waitKey(0)
 cv.destroyAllWindows()
+
