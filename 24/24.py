@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 #import pyautogui
 
 
-imagemOriginal = cv.imread('C:/enviroment/learningOpenCV/24/papagaioDoCongo.webp')
+imagemOriginal = cv.imread('C:/enviroment/learningOpenCV/24/louvaaDeus.jpg')
 altura, largura, canal = imagemOriginal.shape
 print(f'Altura: {altura}, Largura: {largura}')
 
@@ -16,7 +16,7 @@ def selecionarSeed(event, x, y, flags, param):
 
 def algoritmoDeCrescimentoDeRegiao(seed):
    corSemente = imagemOriginal[seed]
-   rangeTolerado = 35 #definindo a variacao de cor q aceitamos
+   rangeTolerado = 95 #definindo a variacao de cor q aceitamos
    regiao = np.zeros((altura, largura), dtype=np.uint8)
    listaDePixels = [seed] #lista criada começando com a seed sendo passada e ela n pode ser vazia
    pixelsVisitados = np.zeros((altura, largura), dtype=bool)
@@ -63,7 +63,7 @@ def algoritmoDeCrescimentoDeRegiao(seed):
       imagemColorida = np.zeros((altura, largura, 3), dtype=np.uint8)
       imagemColorida[regiao == 255] = [255, 0, 0]  # Azul para a região crescida
       cv.circle(imagemColorida, (int(centroX), int(centroY)), 5, (0, 255, 0), -1)
-      cv.imwrite('C:/enviroment/learningOpenCV/22/imagemGerada.jpg', imagemColorida)
+      cv.imwrite('C:/enviroment/learningOpenCV/24/imagemGerada.jpg', imagemColorida)
       cv.imshow('Imagem com Centro', imagemColorida)
    else:
       print('Nenhum pixel  encontrado na imagem.')
