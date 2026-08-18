@@ -5,8 +5,8 @@ imagemOriginal = cv.imread('C:/enviroment/learningOpenCV/25/formasGeometricas.pn
 imagemCinza = cv.cvtColor(imagemOriginal, cv.COLOR_BGR2GRAY)
 altura, largura = imagemCinza.shape
 
-imagemGerada = np.zeros((altura, largura, 3), dtype=np.uint8) 
-matrizRotulos = np.zeros((altura, largura), dtype=np.uint8) 
+imagemGerada = np.zeros((altura, largura, 3), dtype=np.uint8) #cria uma tela preta tridimensional (BGR) onde os objetos serao pintados em cores
+matrizRotulos = np.zeros((altura, largura), dtype=np.uint8) #matriz 2d pra contagem de elementos e fundo
 
 listaDeCores = [[0, 0, 255], [255, 0, 0],[0, 255, 0]] #BGR
 contadorDeCliques = 0
@@ -44,7 +44,8 @@ def algoritmoDeCrescimentoDeRegiao(seed, numRegiao):
                     if imagemCinza[yVizinho, xVizinho] < 127:
                         listaDePixels.append((yVizinho, xVizinho))
     cv.imshow('Imagem Resultado', imagemGerada)
-    cv.imwrite('C:/enviroment/learningOpenCV/25/resultadoQ25.png', imagemGerada)
+    #cv.imshow('Imagem invertida', matrizRotulos)
+    cv.imwrite('C:/enviroment/learningOpenCV/25/resultado.png', imagemGerada)
 
 nomeJanela = 'Clique nos objetos (1:Vermelho, 2:Azul, 3:Verde)'
 cv.namedWindow(nomeJanela)
