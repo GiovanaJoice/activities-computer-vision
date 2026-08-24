@@ -9,7 +9,6 @@ imagemCinza = cv.cvtColor(imagemOriginal, cv.COLOR_BGR2GRAY)
 imagemSuavizada = cv.GaussianBlur(imagemCinza, (5, 5), 0)
 bordasCanny = cv.Canny(imagemSuavizada, 40, 100)
 
-
 contornos, hierarquia = cv.findContours(
     bordasCanny, 
     cv.RETR_EXTERNAL, #detecta apenas as bordas externas (1 contorno por objeto)
