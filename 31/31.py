@@ -37,8 +37,8 @@ for i, contorno in enumerate(contornos):
 caminho_saida = pasta_atual / "resultado_bounding_box.png"
 cv.imwrite(str(caminho_saida), imagemResultado)
 
-cv.imshow('1 - Imagem Original (Entrada)', imagemOriginal)
-cv.imshow('2 - Objetos com Bounding Box (Q31)', imagemResultado)
+cv.imshow('imagem original', imagemOriginal)
+cv.imshow('bounding box', imagemResultado)
 
 cv.waitKey(0)
 cv.destroyAllWindows()
